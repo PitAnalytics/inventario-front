@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>RASTREO DE EQUIPOS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+
+<div id="app">
+
+    <!--CONTENEDOR PRINCIPAL-->
+    <div class="container-fluid">
+
+        <br>
+
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    
+                    <div class="card-body text-secondary">
+                        <h5 class="card-title">BUSCAR EN INVENTARIO</h5>
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-9 col-md-7 col-sm-6">
+                                <div class="row">
+                                    <label class="form-label col" for="selectZona">Zona:</label>
+                                    <select class="form-control col" id="selectZona" v-model="zona.option" v-on:change="inventarioSearch()">
+                                        <option v-for="row in zona.list" v-bind:value="row.id">{{row.zona}}</option>
+                                    </select>
+                                    <label class="form-label col" for="">Equipo:</label>
+                                    <select class="form-control col" id="selectEquipo" v-model="equipo.option" v-on:change="equipoChange()">
+                                        <option v-for="row in equipo.list" v-bind:value="row.codigo">{{row.codigo}}</option>
+                                    </select>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <label class="form-label col-lg-2 col-sm-12" for="">Descripcion:</label>
+                                    <span class="col-lg-10 col-sm-12">{{equipo.descripcion}}</span>
+                                    </div>
+                                </div>
+                            <div class="col-lg-3 col-md-5 col-sm-6">
+                                <img class="img-fluid img-card" v-bind:src="equipo.img">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body text-secondary">
+                        <h5 class="card-title">INVENTARIO</h5>
+
+                        <table class="table" id="tableInventario" v-if="inventario.list.length>0">
+                            <thead>
+                                <tr>
+                                    <th>MATRICULA</th>
+                                    <th>CODIGO</th>
+                                    <th>ZONA</th>
+                                    <th>USANDO</th>
+                                </tr>
+                            </thead>
+                            <tbody v-for="row in inventario.list">
+                                <tr v-bind:id="row.id" v-on:click="inventarioGet(row.id)">
+                                    <td>{{row.id}}</td>    
+                                    <td>{{row.codigoEquipo}}</td>
+                                    <td>{{row.zona}}</td>
+                                    <td v-if="row.usando"><i class="fas fa-check-square"></i></td>
+                                    <td v-else><i class="fas fa-window-close"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <span v-else class="card-text">No se encontraron resultados</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row" hidden>
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <label for="form-label">Matricula:</label>
+                            <span> 1 </span>
+                            <label for="form-label">Codigo:</label>
+                            <span> 1 </span>
+                            <label for="form-label">Zona:</label>
+                            <select class="form-control col-lg-2">
+                                <option v-for="row in zona.list" v-bind:value="row.zona">{{row.zona}}</option>
+                            </select>
+                            <label for="form-label">Usar:</label>           
+                            <span class="col-lg-1"><i class="fas fa-check-square"></i></span>
+                            <button class="btn btn-block btn-success col-lg-1" type="button" >ACTUALIZAR</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<script src="js/main.js"></script>
+
+</body>
+</html>

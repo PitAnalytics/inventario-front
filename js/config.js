@@ -1,0 +1,1 @@
+const serviceUrl='http://localhost';
