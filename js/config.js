@@ -1,1 +1,1 @@
-const serviceUrl='http://localhost';
+const serviceUrl='http://localhost/inventario-back/public';

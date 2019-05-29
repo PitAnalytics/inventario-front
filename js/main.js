@@ -9,11 +9,12 @@ var app = new Vue({
       return {
         
         page:{
+          menu:{},
           title:'WELLCOME',
           subtitle:'wellcome',
           hide:{
             table:Boolean,
-            
+
           }
         },
 
@@ -58,7 +59,7 @@ var app = new Vue({
       //request zona
       zonaIndex(){
         axios
-        .get('http://localhost/rastreo/public/zona')
+        .get(serviceUrl+'/zona')
         .then(response => {
           this.zona.list=response.data;
           this.zona.list.unshift({id:0,zona:'*'});
@@ -76,7 +77,7 @@ var app = new Vue({
       /*****************************************/
       equipoIndex(){
         axios
-        .get('http://localhost/rastreo/public/equipo')
+        .get(serviceUrl+'/equipo')
         .then(response => {
           this.equipo.list=response.data;
           this.equipo.list.unshift({codigo:'*',descripcion:'---'});
@@ -91,7 +92,7 @@ var app = new Vue({
       equipoGet(){
         if(this.equipo.option!=='*'){
           axios
-          .get('http://localhost/rastreo/public/equipo/obtener'+'/'+this.equipo.option)
+          .get(serviceUrl+'/equipo/obtener'+'/'+this.equipo.option)
           .then(response => {
             this.equipo.descripcion=response.data.descripcion;
             this.equipo.img=response.data.img;
@@ -112,7 +113,7 @@ var app = new Vue({
       /****************************************/
       inventarioIndex(){
         axios
-        .get('http://localhost/rastreo/public/inventario')
+        .get(serviceUrl+'/inventario')
         .then(response => {
           this.inventario.list=response.data;
           //console.log(this.inventario.list);
@@ -125,7 +126,7 @@ var app = new Vue({
 
       inventarioSearch(){
         axios
-        .get('http://localhost/rastreo/public/inventario/busqueda'+'/'+this.zona.option.toString()+'/'+this.equipo.option)
+        .get(serviceUrl+'/inventario/busqueda'+'/'+this.zona.option.toString()+'/'+this.equipo.option)
         .then(response => {
           this.inventario.list=response.data;
           //console.log(this.inventario.list);
@@ -138,7 +139,7 @@ var app = new Vue({
       inventarioGet(id){
         alert('ok');
         axios
-        .get('http://localhost/rastreo/public/inventario/obtener'+'/'+id.toString())
+        .get(serviceUrl+'/inventario/obtener'+'/'+id.toString())
         .then(response => {
           this.inventario.option=response.data;
         }).catch(error => {
